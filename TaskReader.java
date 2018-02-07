@@ -13,12 +13,12 @@ public class TasksReader {
 	Map<String, Integer> machineNames = new HashMap<String, Integer>();
 	Map<String, Integer> taskNames = new HashMap<String, Integer>();
 
-
+	
 	public TasksReader(String fileName) {
         
 		readFile(fileName);
 	}
-
+	// read file 
 	public void readFile(String fileName){
 
 		machineNames.put("1", 0);
@@ -66,7 +66,7 @@ public class TasksReader {
 
 			}
 
-
+			// parse forbidden machine assignment 
 			if (!reader.readLine().equals("forbidden machine:")) throw new Exception("error message that needs title4");
 
 			line = reader.readLine();
@@ -79,7 +79,7 @@ public class TasksReader {
 				line = reader.readLine();
 
 			}
-
+			// parse too-near task assignment 
 			if (!reader.readLine().equals("too-near tasks:")) throw new Exception("error message that needs title5");
 
 			line = reader.readLine();
@@ -92,17 +92,18 @@ public class TasksReader {
 				line = reader.readLine();
 
 			}
-
+			// parse machine penalties
 			if (!reader.readLine().equals("machine penalties:")) throw new Exception("error message that needs title6");
 
 			line = reader.readLine();
 			while ( !line.equals("") ) {
-				String[] lineArray = line.split(" ");
+				String[] lineArray = line.split(" "); // split line
 				ArrayList<Integer> intLineArray = new ArrayList<Integer>();
 
 				for (String index : lineArray) intLineArray.add(Integer.parseInt(index));
 				machine_penalties.add(intLineArray);
-
+				
+				// check penalties array size
 				if (intLineArray.size() != 8) throw new Exception("machine penalty error");
 
 				line = reader.readLine();
@@ -136,7 +137,7 @@ public class TasksReader {
 
 
 
-
+		// Exceptions 
 		} catch (IOException e) {
 			System.out.println(e.getMessage() + "\nIO Error");
 			System.exit(0);
@@ -159,30 +160,32 @@ public class TasksReader {
 
 	}
 
-
+	// output values for each assignement
 	public void printValues() {
 		System.out.println("\n");
 		System.out.println("forced_partial_assignments");
 		for (ArrayList<Integer> index : forced_partial_assignments) {
 			System.out.println(index);
 		}
+		// print forbidden_Machines values
 		System.out.println("\n");
 		System.out.println("forbidden_Machines");
 		for (ArrayList<Integer> index : forbidden_Machines) {
 			System.out.println(index);
 		}
+		// print too_near_tasks values
 		System.out.println("\n");
 		System.out.println("too_near_tasks");
 		for (ArrayList<Integer> index : too_near_tasks) {
 			System.out.println(index);
 		}
-
+		// print machine_penalties values
 		System.out.println("\n");
 		System.out.println("machine_penalties");
 		for (ArrayList<Integer> index : machine_penalties) {
 			System.out.println(index);
 		}
-
+		// print too_near_penalties values
 		System.out.println("\n");
 		System.out.println("too_near_penalties");
 		for (ArrayList<Integer> index : too_near_penalties) {
@@ -192,7 +195,8 @@ public class TasksReader {
 
 	}
 
-
+	// checking doubles errors or
+	// Null errors
 	public void checkForErrors(ArrayList<ArrayList<Integer>> list, Boolean checkingForDoubles, Boolean checkingForNull)
 				throws Exception {
 
@@ -203,11 +207,12 @@ public class TasksReader {
 			ListIndex0.add(index.get(0));
 			ListIndex1.add(index.get(1));
 		}
+		// double check
 		if (checkingForDoubles)
 			if (list.size() != ListIndex0.size() ||
 				list.size() != ListIndex1.size() )
 				throw new Exception("partial assignment error");
-
+		// null check
 		if (checkingForNull)
 			if (ListIndex0.contains(null) ||
 				ListIndex1.contains(null) )
